@@ -10,7 +10,7 @@ const app = express();
 // Connection to our atlass database
 mongoose
   .connect(
-    "mongodb+srv://strivecode:<password>@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://strivecode:JFUTJGcCeKpAoO6v@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Successfully connected to mongoDB Atlas");
