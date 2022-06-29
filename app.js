@@ -1,43 +1,24 @@
 const express = require("express");
 const mongoose = require("mongoose");
-//const res = require("express/lib/response");
+const bodyParser = require("body-parser");
+const Thing = require("./models/thing");
 
 const app = express();
 
-//mongoDB Atlass password: JFUTJGcCeKpAoO6v
-// mongoDB connection link: mongodb+srv://strivecode:<password>@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority
-//Full driver code example
+// Full driver code example
 
-/*
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://strivecode:<password>@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
-client.connect(err => {
-  const collection = client.db("test").collection("devices");
-  // perform actions on the collection object
-  client.close();
-});
-*/
-
-//Connection to our atlass database
+// Connection to our atlass database
 mongoose
   .connect(
-    "mongodb+srv://strivecode:JFUTJGcCeKpAoO6v@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://strivecode:<password>@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Successfully connected to mongoDB Atlas");
   })
-  .catch(() => {
+  .catch((error) => {
     console.log("Unable to connect to the database");
     console.error(error);
   });
-
-/*
-take any incoming request that has Content-Type  
-application/json  and make its  body  available 
-on the  req  object, allowing you to write
-*/
-app.use(express.json());
 
 /*
 This will allow requests from all origins to 
@@ -53,24 +34,42 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods",
     "GET,POST,PUT,DELETE,PATCH,OPTIONS"
   );
-  next();
 });
 
-//Accepts product post request from backend
+/*
+take any incoming request that has Content-Type
+application/json  and make its  body  available
+on the  req  object, allowing you to write
+*/
+app.use(bodyParser.json());
+// Accepts product post request from backend
 app.post("/api/stuff", (req, res, next) => {
-  console.log(req.body);
-  res.status(201).json({
-    message: "Sell offer created successfully",
+  const thing = new Thing({
+    title: req.body.title,
+    description: req.body.description,
+    imageUrl: req.body.ImageUrl,
+    price: req.body.price,
+    userId: req.body.userId,
   });
+  thing
+    .save()
+    .then(() => {
+      res.status(201).json({
+        message: "Post data saved successfully",
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({ error });
+    });
   next();
 });
 
 // this middleware, create an array of stuff with the
-//specific data schema required by the front end.Then
-//send that stuff as JSON data, along with a 200 status,
-//for a successful request.
+// specific data schema required by the front end.Then
+// send that stuff as JSON data, along with a 200 status,
+// for a successful request.
 
-app.get("/api/stuff", (req, res, next) => {
+app.get("/api/stuff", (req, res) => {
   const stuff = [
     {
       _id: "oeihfzeoi",
