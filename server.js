@@ -1,5 +1,5 @@
 const http = require("http");
-const app = require("./app").default
+const app = require("./app");
 
 // The function below validates the port provided by user
 //either provides number or a string
