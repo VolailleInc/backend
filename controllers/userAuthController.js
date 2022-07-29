@@ -1,6 +1,9 @@
 const bcrypt = require('bcrypt')
+//import bcrypt from 'bcrypt'
 const User = require('../models/userDataSchema')
+//import { User } from '../models/userDataSchema'
 const jwt = require('jsonwebtoken')
+//import jwt from 'jsonwebtoken'
 
 //Signup authentication
 exports.signup = (req, res, next) => {

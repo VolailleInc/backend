@@ -1,9 +1,12 @@
+//import express from 'express'
 const express = require('express')
 const router = express.Router()
 
 const authMidleware = require('../middleware/authMidleware')
+//import authMidleware from '../middleware/authMidleware'
+//import multer from '../middleware/multer-config'
 const multer = require('../middleware/multer-config')
-
+//import thingRoute from '../controllers/thingController'
 const thingRoute = require('../controllers/thingController')
 
 //This router finds more all thing in the Database

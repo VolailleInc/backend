@@ -1,4 +1,6 @@
-const thing = require('../models/thing')
+//import fs from 'fs'
+const fs = require('fs')
+//import Thing from '../models/thing'
 const Thing = require('../models/thing')
 
 exports.createThing = (req, res, next) => {
@@ -94,28 +96,18 @@ exports.updateOneThing = (req, res, next) => {
 
 exports.deleteOneThing = (req, res, next) => {
   Thing.findOne({ _id: req.params.id }).then((thing) => {
-    if (!thing) {
-      return res.status(404).json({
-        error: new Error('Thing does not exist'),
-      })
-    }
-    /* We verify the userId of the delete request against the decoded
-authorization objected created in authMidleware before we allow for 
-deleting  */
-    if (thing.userId !== req.authorization.userId) {
-      return res.status(400).json({
-        error: new Error('Unauthorized request'),
-      })
-    }
-    Thing.deleteOne({ _id: req.params.id })
-      .then(() => {
-        res.status(200).json({
-          message: 'Item Deleted!',
+    const filename = thing.imageUrl.split('/images/')[1]
+    fs.unlink('images/' + filename, () => {
+      Thing.deleteOne({ _id: req.params.id })
+        .then(() => {
+          res.status(200).json({
+            message: 'Item Deleted!',
+          })
         })
-      })
-      .catch((error) => {
-        res.status(400).json({ error })
-      })
+        .catch((error) => {
+          res.status(400).json({ error })
+        })
+    })
   })
 }
 

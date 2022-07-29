@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
+//import mongoose from 'mongoose'
 
 /*
 Create a data schema that contains the fields for each  Thing, 
@@ -14,6 +15,6 @@ const thingSchema = mongoose.Schema({
   imageUrl: { type: String, required: true },
   userId: { type: String, required: true },
   price: { type: Number, required: true },
-});
+})
 
-module.exports = mongoose.model("Thing", thingSchema);
+module.exports = mongoose.model('Thing', thingSchema)

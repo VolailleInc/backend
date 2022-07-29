@@ -1,9 +1,14 @@
+//import path from 'path'
 const path = require('path')
+//import express from 'express'
 const express = require('express')
+//import bodyParser from 'body-parser'
 const bodyParser = require('body-parser')
+//import mongoose from 'mongoose'
 const mongoose = require('mongoose')
-
+//import productsRouter from './routes/thingRoute'
 const productsRouter = require('./routes/thingRoute')
+//import userAuthRoute from './routes/userAuthRoute'
 const userAuthRoute = require('./routes/userAuthRoute')
 
 const app = express()
@@ -11,7 +16,7 @@ const app = express()
 // Connection to our atlass database
 mongoose
   .connect(
-    'mongodb+srv://strivecode:@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority',
+    'mongodb+srv://strivecode:JFUTJGcCeKpAoO6v@cluster0.5seq3.mongodb.net/?retryWrites=true&w=majority',
   )
   .then(() => {
     console.log('Successfully connected to mongoDB Atlas')
